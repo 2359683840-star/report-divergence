@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: report-divergence-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DASHSCOPE_API_KEY
+        sync: false
+      - key: API_BASE_URL
+        value: https://api.deepseek.com
+      - key: LLM_MODEL
+        value: deepseek-chat
