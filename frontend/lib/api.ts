@@ -1,11 +1,9 @@
-// API 调用封装
+// API 调用封装 — 后端已改写为 Next.js API 路由，同源调用
 
 import type { DivergenceResult } from "../types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE}${url}`, {
+  const res = await fetch(url, {
     headers: { "Content-Type": "application/json" },
     ...options,
   });
@@ -102,7 +100,7 @@ export async function* streamAIAnalysis(
   targetPrice: DivergenceResult["target_price"],
   recentTitles: string[]
 ): AsyncGenerator<SSEEvent> {
-  const res = await fetch(`${API_BASE}/api/analyze/ai`, {
+  const res = await fetch("/api/analyze/ai", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
